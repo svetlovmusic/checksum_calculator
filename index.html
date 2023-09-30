@@ -27,7 +27,7 @@
 	<script>
 		function addSpaces() {
 			const inputElement = document.getElementById('packet');
-			let value = inputElement.value.replace(/\s+/g, '').replace(/(.{2})/g, '$1 ').trim();
+			let value = inputElement.value.toUpperCase().replace(/\s+/g, '').replace(/(.{2})/g, '$1 ').trim();
 			inputElement.value = value;
 		}
 
