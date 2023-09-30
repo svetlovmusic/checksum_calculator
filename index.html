@@ -4,6 +4,14 @@
 	<meta charset="UTF-8">
 	<title>Checksum Calculator</title>
 	<link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" rel="stylesheet">
+	<style>
+		#copyIcon {
+			margin-left: 10px;
+			cursor: pointer;
+			display: none;
+		}
+	</style>
 </head>
 <body>
 	<div class="container mt-5">
@@ -16,7 +24,10 @@
 			<button type="button" class="btn btn-primary" onclick="calculateChecksum()">Calculate</button>
 		</form>
 
-		<p id="output" class="mt-3"></p>
+		<div class="mt-3">
+			<span id="output"></span> 
+			<i class="fas fa-copy" id="copyIcon" onclick="copyToClipboard()"></i>
+		</div>
 
 		<div class="mt-5">
 			<h5>Help</h5>
@@ -46,8 +57,12 @@
 				sum += parseInt(hexArray[i], 16);
 			}
 
+			const outputElement = document.getElementById('output');
+			const copyIcon = document.getElementById('copyIcon');
+
 			if (!placeholderFound) {
-				document.getElementById('output').textContent = input;
+				outputElement.textContent = input.replace(/\s+/g, '');
+				copyIcon.style.display = 'inline'; // показываем значок
 				return;
 			}
 
@@ -56,11 +71,20 @@
 			let byteHigh = ((checksum & 0xFF00) >> 8).toString(16).toUpperCase().padStart(2, '0');
 			let checksumReversed = byteLow + ' ' + byteHigh;
 
-			let output = input.replace(placeholder, checksumReversed);
-			document.getElementById('output').textContent = output;
+			let output = input.replace(placeholder, checksumReversed).replace(/\s+/g, '');
+			outputElement.textContent = output;
+			copyIcon.style.display = 'inline'; // показываем значок
 		}
 
-		// Initially add spaces
+		function copyToClipboard() {
+			const el = document.createElement('textarea');
+			el.value = document.getElementById('output').textContent;
+			document.body.appendChild(el);
+			el.select();
+			document.execCommand('copy');
+			document.body.removeChild(el);
+		}
+
 		addSpaces();
 	</script>
 	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
