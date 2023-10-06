@@ -19,7 +19,12 @@
 		<form id="checksumForm">
 			<div class="form-group">
 				<label for="packet">Enter Packet:</label>
-				<input type="text" name="packet" id="packet" class="form-control" value="5AA5023E20038E1600FFFF" oninput="addSpaces()">
+				<div class="input-group">
+				  <input type="text" name="packet" id="packet" class="form-control" value="5AA5023E20038E1600FFFF" oninput="addSpaces()">
+				  <button id="clear_input" type="button" class="btn bg-transparent" style="margin-left: -40px; z-index: 100;" onclick="this.previousElementSibling.value = ''">
+					<i class="fa fa-times"></i>
+				  </button>
+				</div>
 			</div>
 			<button type="button" class="btn btn-primary" onclick="calculateChecksum()">Calculate</button>
 		</form>
